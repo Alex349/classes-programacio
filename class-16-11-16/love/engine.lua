@@ -59,6 +59,7 @@ function createEnemiesCollection (gameObjectsCollection)
   return enemiesCollection
 end
 
+enemiesCollection = createEnemiesCollection(gameObjectsCollection)
 
 function getDistance(object1, object2)
 --[[ This function returns the distance between object1 and object2
@@ -141,20 +142,57 @@ function saveLevel(outputFile)
   --This functions creates an output file to save the level, in the same format as "LevelIni.txt"
   local gameObject = {}
   local gameObjects = {}
+  gameObjects = gameObjectsCollection
   -- Your code here ---
   -- Good Luck! --
-
+  for k,v in pairs(gameObjects) do
+    local line = ""
+    gameObject = v
+    for k,v in pairs(gameObject) do
+        line = line .. v .. " "
+        -- line -> player
+        -- line -> line .. player1
+        -- line -> line .. 0
+        -- line -> player player1 0 0
+    end
+    -- line -> player player1 0 0
+    line = line .. "\n"
+    -- line -> line \n
+    writeFileLine2(outputFile, line)
+  end
   return gameObjects
+end
+
+function moveObject(gameObject, direction)
+  local movedGameObject = {}
+  --This function MOVES the gameObject "gameObject", following a direction given by "direction"
+  -- (a 2D vector)
+  -- The function returns the gameObject with modified values of x and y
+  -- Your code here ---
+  -- Good Luck! --
+  movedGameObject = gameObject
+  movedGameObject.x = movedGameObject.x + direction.x
+  movedGameObject.y = movedGameObject.y + direction.y
+  -- 3, 2
+  -- 3---->
+  --  ^
+  -- 2|
+  -- movedGameObject.x -> 20
+  -- movedGameObject.x = direction.x
+  -- movedGameObject.x -> 3
+  return movedGameObject
 end
 
 function moveNearestEnemy(player, enemy, direction)
   local enemyMoved = {}
-  --This function MOVES the nearest enemy "enemy" to player "player", changing values of x and y, following a direction given by "direction"
+  --This function MOVES the nearest enemy "enemy", changing values of x and y, following a direction given by "direction"
   -- (a 2D vector)
   -- The function returns the game object with modified values of x and y
   -- Your code here ---
   -- Good Luck! --
+  enemyMoved = getNearestEnemy(player, enemiesCollection)
 
+  moveObject(enemyMoved, direction)
 
-  return enemyMoved = {}
+  return enemyMoved
 end

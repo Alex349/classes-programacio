@@ -25,6 +25,10 @@ function writeFileLine2(fileName, fileLine)
     if (f) then
       f.write(f, fileLine)
       --f:write(fileline) -- better option, further details in next lessons
+      -- coses.txt -> "hola \n adeu \n"
+      -- "caca" -> coses.txt (append mode)
+      -- coses.txt -> "hola \n adeu \n caca"
+
     end
     --f.flush(f)
     f.close(f)
