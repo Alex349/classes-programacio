@@ -65,7 +65,7 @@ function spawnAsteroid()
     math.randomseed(os.time()) -- Random seed using the system clock, to obtain better random values.
     -- math.random(n1, n2) -- Returns a random number between n1 and n2
 
-    minAsteroidsSpawnY = -20;
+    minAsteroidsSpawnY = -75;
     spawnX = math.random(0, w);
     spawnY = minAsteroidsSpawnY;
 
@@ -107,7 +107,7 @@ function moveAsteroids(dt)
     -- We update the coordinates of every asteroid found
     v.y = v.y + v.speed * dt
     -- We check if the asteroid is out of window
-    if v.y > h then
+    if v.y - v.oy > h then
       -- If so, we unspawn the asteroid by calling the function
       unspawnAsteroid(k)
     end
