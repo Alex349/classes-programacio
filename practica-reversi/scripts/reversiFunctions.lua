@@ -27,7 +27,7 @@ function checkHorizontalCapture(diskType, startRow, startColumn)
 
   for k, v in pairs(gameBoardBoxes[startRow]) do
     -- _______BNNNNNB____________
-    
+
   end
   print(alex)
 end
@@ -46,7 +46,7 @@ end
 function checkDiagonalCapture(diskType, startRow, startColumn)
     -- This function returns if it's possible to make a diagonl capture in the column given by startRow, startColumn
     -- Remember that a capture movement is possible if there are opposite disk types bewteen two own disk types
-    -- If a vertical capture is possible, the function returns:
+    -- If a diagonal capture is possible, the function returns:
       -- True
       -- start game box (row, column) of the capture
       -- end game box (row, column) of the capture
@@ -60,9 +60,20 @@ function isValidMove(diskType, startRow, startColumn)
     -- Use older functions to check it
 end
 
+function addTokenToGameBoard(tokenType, row, column)
+  -- This function stores the tokenType token to the game board box given by row, column
+  -- Remember that we use the external table gameBoardBoxes to store the game board map
+
+  -- If token in (row, column) is nil
+  if (not(gameBoardBoxes[row][column].tokenType)) then
+    -- We just put the tokenType to the field
+    gameBoardBoxes[row][column].tokenType = tokenType
+  end
+end
+
 function removeDiskFromGameBoard(row, column)
     -- This function removes the disk placed in (row, column) of the game gameboard
-    -- The function doesn't return nothing
+    -- The function returns nothing
     -- You can remove a disk from the game board when placed before (with the addToken function) but further checked that it's not a valid move
     -- If you do so, DON'T draw the gameboard with the new disk before checking valid moves
 end
@@ -81,4 +92,29 @@ function isWinner()
     -- Remember that the game ends when there are no valid moves for both players.
     -- If the game ends, function counts diskTypes of both players and returns the winner
     -- If the game can continue, the function returns nil
+end
+
+function checkCaptures(diskType, startRow, startColumn)
+  
+    addTokenToGameBoard(diskType, startRow, startColumn)
+
+    isDiagonalValid, startBox, endBox = checkDiagonalCapture(diskType, startRow, startColumn)
+
+    if(isDiagonalValid)then
+      makeDiagonalCapture(diskType, startBox, endBox)
+    end
+
+    -- VERTICAL
+    isVerticalValid, startBox, endBox = checkVerticalCapture(diskType, startRow, startColumn)
+
+    if(isVerticalValid)then
+      makeVerticalCapture(diskType, startBox, endBox)
+    end
+
+    -- HORIZONTAL
+    isHorizontalValid, startBox, endBox = checkHorizontalCapture(diskType, startRow, startColumn)
+
+    if(isHorizontalValid)then
+      makeHorizontalCapture(diskType, startBox, endBox)
+    end
 end
