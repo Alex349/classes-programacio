@@ -25,33 +25,114 @@ function checkHorizontalCapture(diskType, startRow, startColumn)
   -- mat[1][1]
   -- gameBoardBoxes[startRow]
 
-  for k, v in pairs(gameBoardBoxes[startRow]) do
-    -- _______BNNNNNB____________
-
-  end
-  print(alex)
+    firstDisk = false
+    lastDisk = false
+    boxStart = {}
+    boxEnd = {}
+    
+     for i = 1,8 do
+      
+      v = gameBoardBoxes [startRow][i]
+      
+      if v.diskType == diskType then
+      firstDisk = true
+      boxStart.x = i
+      boxStart.y = startRow
+      
+    end
+    
+      if v.diskType == "nil" then
+        firstDisk = false
+        end
+      
+      if v.diskType == diskType and firstDisk == true then
+        lastDisk = true
+        boxEnd.x = i
+        boxEnd.y = startRow
+        return true, boxStart, boxEnd
+        end
+      
+    end
+ return false
 end
 
 function checkVerticalCapture(diskType, startRow, startColumn)
     -- This function returns if it's possible to make a vertical capture in the column given by startColumn
     -- Remember that a capture movement is possible if there are opposite disk types bewteen two own disk types
+    firstDisk = false
+    lastDisk = false
+    boxStart = {}
+    boxEnd = {}
     -- If a vertical capture is possible, the function returns:
+    for i = 1,8 do
+      
+      v = gameBoardBoxes [i][startColumn]
+      
+      if v.diskType == diskType then
+      firstDisk = true
+      boxStart.x = startColumn
+      boxStart.y = i
+      
+    end
+    
+      if v.diskType == "nil" then
+        firstDisk = false
+      end
+      
+      if v.diskType == diskType and firstDisk == true then
+        lastDisk = true
+        boxEnd.x = startColumn
+        boxEnd.y = i
+        return true, boxStart, boxEnd
+        end
+      
+    end
       -- True
       -- start game box (row, column) of the capture
       -- end game box (row, column) of the capture
     -- If there is no vertical capture in the column, the function returns
+    return false 
       -- False
 end
 
 function checkDiagonalCapture(diskType, startRow, startColumn)
+  
+    firstDisk = false
+    lastDisk = false
+    boxStart = {}
+    boxEnd = {}
     -- This function returns if it's possible to make a diagonl capture in the column given by startRow, startColumn
     -- Remember that a capture movement is possible if there are opposite disk types bewteen two own disk types
     -- If a diagonal capture is possible, the function returns:
       -- True
       -- start game box (row, column) of the capture
       -- end game box (row, column) of the capture
+      for i = 1,8 do
+      
+      v = gameBoardBoxes [i][i]
+      
+      if v.diskType == diskType then
+      firstDisk = true
+      boxStart.x = i
+      boxStart.y = i
+      
+    end
+    
+      if v.diskType == "nil" then
+        firstDisk = false
+      end
+      
+      if v.diskType == diskType and firstDisk == true then
+        lastDisk = true
+        boxEnd.x = i
+        boxEnd.y = i
+        return true, boxStart, boxEnd
+        end
+      
+    end
     -- If there is no diagonal capture in the column, the function returns
       -- False
+      return false
 end
 
 function isValidMove(diskType, startRow, startColumn)
